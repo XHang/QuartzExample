@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:task="http://www.springframework.org/schema/task"  
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task.xsd">
+       <!-- Spring自带的task工具 -->
+       <task:scheduled-tasks >   
+        	<task:scheduled ref="SpringJob" method="run" fixed-delay="200"  initial-delay="1"/>   
+        	<!-- fixed-delay是从上一个任务完成开始到下一个任务开始的间隔，单位是毫秒。  
+        		initial-delay是多次时间才第一次执行调度 
+        		fixedRate：即从上一个任务开始到下一个任务开始的间隔，单位是毫秒,就是每隔几秒执行任务的说
+        	-->
+		</task:scheduled-tasks>  
+		<bean id="SpringJob" class="com.Quartz.Demo.SpringJob"></bean>
+</beans>

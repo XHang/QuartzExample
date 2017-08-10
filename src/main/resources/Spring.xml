@@ -12,50 +12,5 @@
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd">
-        <!-- spring配置文件中配置作业类JobDetailBean-需要继承某个特定类-->
-		<bean name="job1" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"  >  
-			<property name="jobClass" value="com.Quartz.Demo.ExtendsJob" />  <!-- 指定你的作业类 -->
-			<property name="jobDataAsMap">  
-				<map>  
-					<entry key="msg" value="你大爷来了" /> <!--可以注入到调度类的属性，key就是调度类的属性-->
-			  </map>
-			</property>  
-		</bean>  
-		<!-- spring配置文件中配置作业类JobDetailBean-不需要继承类 -->
-		<bean id="job2"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
-			<property name="targetObject">  
-				<bean class="com.Quartz.Demo.NoneExtendsJob" />  <!-- 指向你的目标类 -->
-			</property>  
-			<property name="targetMethod" value="run" />  <!-- 指向你的目标方法 -->
-			<property name="concurrent" value="false" /><!-- 作业不并发调度 -->  
-		</bean>   
-		
-		<!-- 配置作业调度的触发方式（触发器）,以下是第一种：按照一定频度调用任务，如每隔30分钟运行一次。 -->
-		<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">  
-			<property name="jobDetail" ref="job1" />  		
-			<property name="startDelay" value="0" /><!-- 调度工厂实例化后，经过0秒开始执行调度 -->  
-			<property name="repeatInterval" value="2000" /><!-- 每2秒调度一次 -->  
-		</bean> 
-		<!-- 顺便配置一下免继承的触发器 -->
-		<bean id="simpleTrigger2" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">  
-			<property name="jobDetail" ref="job2" />  		
-			<property name="startDelay" value="0" /><!-- 调度工厂实例化后，经过0秒开始执行调度 -->  
-			<property name="repeatInterval" value="5000" /><!-- 每5秒调度一次 -->  
-		</bean> 
-		<!-- 配置作业调度的触发方式（触发器）,以下是第二种：到指定时间运行一次，如每天12:00运行一次等。
-		<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">  
-			<property name="jobDetail" ref="job1" />  
-			   每天12:00运行一次  
-			<property name="cronExpression" value="0 0 12 * * ?" />  
-		</bean>  
-		 -->
-		 <!-- 定义调度工厂,用来指定使用的是哪种调度。 -->
-		 <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"  lazy-init="true">  
-			<property name="triggers">  
-			<list>  
-				<ref bean="simpleTrigger" />  <!-- 指向触发器的名字 -->
-				<ref bean="simpleTrigger2"/>
-			</list>  
-			</property>  
-		</bean>  
-</beans>
+        <import resource="SpringTask.xml"/>
+        </beans>
