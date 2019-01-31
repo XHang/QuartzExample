@@ -126,3 +126,5 @@ CRON表达式    含义
 # Quartz的特性
 
 1. 不能用Junit来测试作业调度框架
+2. Spring 自带的调度程序的cron表达式不支持 ` /1 * *`  也就是说 `/`前面必须带有字符, 不然报 `for input String xxxx `  
+> 这货肯定是用字符串分割`
